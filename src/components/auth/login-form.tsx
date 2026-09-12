@@ -52,23 +52,28 @@ export function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
       {serverError && (
         <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
           {serverError}
         </div>
       )}
 
-      <Field>
-        <FieldLabel>Email</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="login-email"
+          className="text-sm font-medium text-foreground"
+        >
+          Email
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="login-email"
             type="email"
             placeholder="john@example.com"
+            autoComplete="email"
+            aria-invalid={!!errors.email}
             {...register("email")}
           />
 
@@ -76,13 +81,21 @@ export function LoginForm() {
         </FieldContent>
       </Field>
 
-      <Field>
-        <FieldLabel>Password</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="login-password"
+          className="text-sm font-medium text-foreground"
+        >
+          Password
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="login-password"
             type="password"
             placeholder="********"
+            autoComplete="current-password"
+            aria-invalid={!!errors.password}
             {...register("password")}
           />
 
@@ -91,7 +104,8 @@ export function LoginForm() {
       </Field>
 
       <Button
-        className="w-full cursor-pointer"
+        type="submit"
+        className="h-9 w-full cursor-pointer"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Signing in..." : "Sign In"}

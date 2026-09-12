@@ -55,22 +55,27 @@ export function SignupForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
       {serverError && (
         <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
           {serverError}
         </div>
       )}
 
-      <Field>
-        <FieldLabel>Name</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="signup-name"
+          className="text-sm font-medium text-foreground"
+        >
+          Name
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="signup-name"
             placeholder="John Doe"
+            autoComplete="name"
+            aria-invalid={!!errors.name}
             {...register("name")}
           />
 
@@ -78,13 +83,21 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field>
-        <FieldLabel>Email</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="signup-email"
+          className="text-sm font-medium text-foreground"
+        >
+          Email
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="signup-email"
             type="email"
             placeholder="john@example.com"
+            autoComplete="email"
+            aria-invalid={!!errors.email}
             {...register("email")}
           />
 
@@ -92,13 +105,21 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field>
-        <FieldLabel>Password</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="signup-password"
+          className="text-sm font-medium text-foreground"
+        >
+          Password
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="signup-password"
             type="password"
             placeholder="********"
+            autoComplete="new-password"
+            aria-invalid={!!errors.password}
             {...register("password")}
           />
 
@@ -106,24 +127,31 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field>
-        <FieldLabel>Confirm Password</FieldLabel>
+      <Field className="gap-1.5">
+        <FieldLabel
+          htmlFor="signup-confirm-password"
+          className="text-sm font-medium text-foreground"
+        >
+          Confirm Password
+        </FieldLabel>
 
-        <FieldContent>
+        <FieldContent className="gap-0.5">
           <Input
+            id="signup-confirm-password"
             type="password"
             placeholder="********"
+            autoComplete="new-password"
+            aria-invalid={!!errors.confirmPassword}
             {...register("confirmPassword")}
           />
 
-          <FieldError>
-            {errors.confirmPassword?.message}
-          </FieldError>
+          <FieldError>{errors.confirmPassword?.message}</FieldError>
         </FieldContent>
       </Field>
 
       <Button
-        className="w-full cursor-pointer"
+        type="submit"
+        className="h-9 w-full cursor-pointer"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Creating account..." : "Create Account"}

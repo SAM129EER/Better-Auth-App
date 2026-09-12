@@ -1,8 +1,7 @@
 "use client";
-
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { AuthModal } from "@/components/auth/auth-modal";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -40,18 +39,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="flex gap-3">
-          <Link href="/login">
-            <Button size="lg" className="cursor-pointer">
-              Sign In
-            </Button>
-          </Link>
-          <Link href="/signup">
-            <Button size="lg" variant="outline" className="cursor-pointer">
-              Sign Up
-            </Button>
-          </Link>
-        </div>
+        <AuthModal />
       </main>
     );
   }
@@ -61,9 +49,7 @@ export default function HomePage() {
       <div className="w-full max-w-lg rounded-xl border p-8 shadow-sm">
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Welcome back!
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">Welcome back!</p>
         </div>
 
         <div className="space-y-4 rounded-lg bg-muted/50 p-4">
@@ -81,15 +67,21 @@ export default function HomePage() {
             )}
 
             <div className="flex-1 min-w-0">
-              <p className="text-lg font-semibold truncate">{session.user.name}</p>
-              <p className="text-sm text-muted-foreground truncate">{session.user.email}</p>
+              <p className="text-lg font-semibold truncate">
+                {session.user.name}
+              </p>
+              <p className="text-sm text-muted-foreground truncate">
+                {session.user.email}
+              </p>
             </div>
           </div>
 
           <div className="space-y-2 border-t pt-3 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">User ID</span>
-              <span className="font-mono text-xs truncate ml-4 max-w-[200px]">{session.user.id}</span>
+              <span className="font-mono text-xs truncate ml-4 max-w-50">
+                {session.user.id}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Email Verified</span>
@@ -97,7 +89,9 @@ export default function HomePage() {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Joined</span>
-              <span>{new Date(session.user.createdAt).toLocaleDateString()}</span>
+              <span>
+                {new Date(session.user.createdAt).toLocaleDateString()}
+              </span>
             </div>
           </div>
         </div>

@@ -50,11 +50,11 @@ export function SocialLogins() {
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2.5">
       <Button
         type="button"
         variant="outline"
-        className="w-full gap-2 cursor-pointer"
+        className="h-10 w-full cursor-pointer gap-2.5 bg-background font-medium shadow-sm hover:bg-muted/60"
         onClick={handleGitHubLogin}
       >
         <GitHubIcon />
@@ -64,7 +64,7 @@ export function SocialLogins() {
       <Button
         type="button"
         variant="outline"
-        className="w-full gap-2 cursor-pointer"
+        className="h-10 w-full cursor-pointer gap-2.5 bg-background font-medium shadow-sm hover:bg-muted/60"
         onClick={handleGoogleLogin}
       >
         <GoogleIcon />
