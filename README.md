@@ -67,6 +67,10 @@ DATABASE_URL="postgresql://user:password@ep-sample-pooler.region.aws.neon.tech/n
 BETTER_AUTH_SECRET="your_generated_random_secret_key"
 BETTER_AUTH_URL="http://localhost:3000"
 
+# Email verification (Resend)
+RESEND_API_KEY="re_your_resend_api_key"
+EMAIL_FROM="Your App <noreply@your-verified-domain.com>"
+
 # GitHub OAuth Credentials
 GITHUB_CLIENT_ID="your_github_client_id"
 GITHUB_CLIENT_SECRET="your_github_client_secret"
@@ -79,6 +83,10 @@ GOOGLE_CLIENT_SECRET="your_google_client_secret"
 > **Note on OAuth Callbacks:**
 > - **GitHub Redirect URI:** `http://localhost:3000/api/auth/callback/github`
 > - **Google Redirect URI:** `http://localhost:3000/api/auth/callback/google`
+
+> **Email verification:** Create a Resend account, verify the domain used in
+> `EMAIL_FROM`, and add `RESEND_API_KEY` and `EMAIL_FROM` to `.env`. New
+> email/password users must verify their email before they can sign in.
 
 ---
 

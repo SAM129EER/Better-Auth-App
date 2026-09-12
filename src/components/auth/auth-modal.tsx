@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { LoginForm } from "@/components/auth/login-form";
 import { SignupForm } from "@/components/auth/signup-form";
 import { SocialLogins } from "@/components/auth/social-logins";
@@ -26,10 +27,19 @@ export function AuthModal({
   initialMode = "login",
   defaultOpen = false,
 }: AuthModalProps) {
+  const pathname = usePathname();
+  const router = useRouter();
   const [mode, setMode] = useState<AuthMode>(initialMode);
 
   return (
-    <Dialog defaultOpen={defaultOpen}>
+    <Dialog
+      defaultOpen={defaultOpen}
+      onOpenChange={(open) => {
+        if (!open && (pathname === "/login" || pathname === "/signup")) {
+          router.push("/");
+        }
+      }}
+    >
       <div className="flex gap-3">
         <DialogTrigger
           render={<Button size="lg" />}
@@ -45,7 +55,7 @@ export function AuthModal({
         </DialogTrigger>
       </div>
 
-      <DialogContent className="gap-5 rounded-2xl p-7 sm:max-w-[440px]">
+      <DialogContent className="gap-5 rounded-2xl p-7 sm:max-w-110">
         <DialogHeader className="items-center pr-8 text-center">
           <DialogTitle className="text-xl tracking-tight">
             {mode === "login" ? "Welcome Back" : "Create Account"}

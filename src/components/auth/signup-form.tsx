@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 
 import { signupSchema, type SignupSchema } from "@/lib/validation/authSchema";
 import { authClient } from "@/lib/auth-client";
@@ -19,8 +18,8 @@ import {
 } from "@/components/ui/field";
 
 export function SignupForm() {
-  const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+  const [verificationSent, setVerificationSent] = useState(false);
 
   const {
     register,
@@ -50,8 +49,18 @@ export function SignupForm() {
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    setVerificationSent(true);
+  }
+
+  if (verificationSent) {
+    return (
+      <div className="space-y-3 text-center text-sm">
+        <p className="font-medium text-foreground">Check your inbox</p>
+        <p className="text-muted-foreground">
+          We sent you a verification link. Verify your email before signing in.
+        </p>
+      </div>
+    );
   }
 
   return (
