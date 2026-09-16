@@ -1,7 +1,11 @@
 "use client";
 
+import { useState } from "react";
+
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+
+type SocialProvider = "github" | "google";
 
 function GitHubIcon() {
   return (
@@ -35,40 +39,54 @@ function GoogleIcon() {
 }
 
 export function SocialLogins() {
-  const handleGitHubLogin = async () => {
-    await authClient.signIn.social({
-      provider: "github",
-      callbackURL: "/",
-    });
-  };
+  const [pendingProvider, setPendingProvider] = useState<SocialProvider | null>(
+    null,
+  );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleGoogleLogin = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
+  async function handleSocialLogin(provider: SocialProvider) {
+    setErrorMessage(null);
+    setPendingProvider(provider);
+
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: "/dashboard",
     });
-  };
+
+    if (error) {
+      setErrorMessage(error.message || "Unable to start social sign-in");
+      setPendingProvider(null);
+    }
+  }
 
   return (
     <div className="flex flex-col gap-2.5">
+      {errorMessage && (
+        <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+          {errorMessage}
+        </div>
+      )}
+
       <Button
         type="button"
         variant="outline"
         className="h-10 w-full cursor-pointer gap-2.5 bg-background font-medium shadow-sm hover:bg-muted/60"
-        onClick={handleGitHubLogin}
+        disabled={pendingProvider !== null}
+        onClick={() => handleSocialLogin("github")}
       >
         <GitHubIcon />
-        Continue with GitHub
+        {pendingProvider === "github" ? "Connecting..." : "Continue with GitHub"}
       </Button>
 
       <Button
         type="button"
         variant="outline"
         className="h-10 w-full cursor-pointer gap-2.5 bg-background font-medium shadow-sm hover:bg-muted/60"
-        onClick={handleGoogleLogin}
+        disabled={pendingProvider !== null}
+        onClick={() => handleSocialLogin("google")}
       >
         <GoogleIcon />
-        Continue with Google
+        {pendingProvider === "google" ? "Connecting..." : "Continue with Google"}
       </Button>
     </div>
   );

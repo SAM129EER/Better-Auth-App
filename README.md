@@ -105,9 +105,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Route | Description |
 |---|---|
-| `/` | Landing page when unauthenticated; User Dashboard when authenticated |
+| `/` | Landing page when unauthenticated; redirects verified users to `/dashboard` |
 | `/login` | Sign-in page with Email/Password & Social OAuth (Google, GitHub) |
 | `/signup` | Account creation page with Zod schema validation |
+| `/dashboard` | Server-protected dashboard; unauthenticated users are redirected to `/login` |
 | `/api/auth/[...all]` | Better Auth dynamic API route handler |
 
 ---
