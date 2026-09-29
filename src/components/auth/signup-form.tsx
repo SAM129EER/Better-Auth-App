@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Lock, Mail, User } from "lucide-react";
 
 import { signupSchema, type SignupSchema } from "@/lib/validation/authSchema";
 import { authClient } from "@/lib/auth-client";
 
+import { AuthInput } from "@/components/auth/auth-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 import {
   Field,
@@ -64,14 +65,14 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {serverError && (
         <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
           {serverError}
         </div>
       )}
 
-      <Field className="gap-1.5">
+      <Field className="gap-2">
         <FieldLabel
           htmlFor="signup-name"
           className="text-sm font-medium text-foreground"
@@ -79,9 +80,10 @@ export function SignupForm() {
           Name
         </FieldLabel>
 
-        <FieldContent className="gap-0.5">
-          <Input
+        <FieldContent className="gap-1">
+          <AuthInput
             id="signup-name"
+            icon={User}
             placeholder="John Doe"
             autoComplete="name"
             aria-invalid={!!errors.name}
@@ -92,7 +94,7 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field className="gap-1.5">
+      <Field className="gap-2">
         <FieldLabel
           htmlFor="signup-email"
           className="text-sm font-medium text-foreground"
@@ -100,10 +102,11 @@ export function SignupForm() {
           Email
         </FieldLabel>
 
-        <FieldContent className="gap-0.5">
-          <Input
+        <FieldContent className="gap-1">
+          <AuthInput
             id="signup-email"
             type="email"
+            icon={Mail}
             placeholder="john@example.com"
             autoComplete="email"
             aria-invalid={!!errors.email}
@@ -114,7 +117,7 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field className="gap-1.5">
+      <Field className="gap-2">
         <FieldLabel
           htmlFor="signup-password"
           className="text-sm font-medium text-foreground"
@@ -122,11 +125,12 @@ export function SignupForm() {
           Password
         </FieldLabel>
 
-        <FieldContent className="gap-0.5">
-          <Input
+        <FieldContent className="gap-1">
+          <AuthInput
             id="signup-password"
             type="password"
-            placeholder="********"
+            icon={Lock}
+            placeholder="At least 8 characters"
             autoComplete="new-password"
             aria-invalid={!!errors.password}
             {...register("password")}
@@ -136,7 +140,7 @@ export function SignupForm() {
         </FieldContent>
       </Field>
 
-      <Field className="gap-1.5">
+      <Field className="gap-2">
         <FieldLabel
           htmlFor="signup-confirm-password"
           className="text-sm font-medium text-foreground"
@@ -144,11 +148,12 @@ export function SignupForm() {
           Confirm Password
         </FieldLabel>
 
-        <FieldContent className="gap-0.5">
-          <Input
+        <FieldContent className="gap-1">
+          <AuthInput
             id="signup-confirm-password"
             type="password"
-            placeholder="********"
+            icon={Lock}
+            placeholder="Re-enter your password"
             autoComplete="new-password"
             aria-invalid={!!errors.confirmPassword}
             {...register("confirmPassword")}
@@ -160,7 +165,7 @@ export function SignupForm() {
 
       <Button
         type="submit"
-        className="h-9 w-full cursor-pointer"
+        className="h-12 w-full cursor-pointer text-base md:text-sm"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Creating account..." : "Create Account"}
