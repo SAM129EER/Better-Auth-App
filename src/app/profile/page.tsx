@@ -6,7 +6,7 @@ const page = async () => {
 
   return (
     <div>
-     <h1>This is Profile page </h1>
+     <h1 className={"min-h-screen flex items-center justify-center text-3xl"}>Hello,{session.user?.name}</h1>
     </div>
   );
 };

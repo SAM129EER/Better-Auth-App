@@ -5,12 +5,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
-type DashboardSession = NonNullable<
-  Awaited<ReturnType<typeof authClient.getSession>>["data"]
->;
+import {SessionType} from "@/types/session-type"
 
 type DashboardPageProps = {
-  session: DashboardSession;
+  session: SessionType;
 };
 
 export function DashboardPage({ session }: DashboardPageProps) {
